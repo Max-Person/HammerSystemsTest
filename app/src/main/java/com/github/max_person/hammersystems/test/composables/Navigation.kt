@@ -22,7 +22,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 fun NavigationScreens(navController: NavHostController, modifier: Modifier){
     NavHost(navController = navController, startDestination = "mainMenu", modifier = modifier){
         composable("mainMenu"){
-
+            MainMenuScreen()
         }
         composable("profile"){
             Text("PROFILE SCREEN NOT IMPLEMENTED")
