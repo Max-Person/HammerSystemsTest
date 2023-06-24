@@ -1,6 +1,7 @@
 package com.github.max_person.hammersystems.test.composables
 
 import android.content.pm.ActivityInfo
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,12 +45,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.github.max_person.hammersystems.test.R
 import com.github.max_person.hammersystems.test.data.MenuViewModel
 import com.github.max_person.hammersystems.test.data.models.FoodCard
 import me.onebone.toolbar.CollapsingToolbarScaffold
@@ -287,39 +290,23 @@ fun SpecialOfferScroll(
         contentPadding = PaddingValues(horizontal = horizontalPadding),
         horizontalArrangement = Arrangement.spacedBy(spacing),
     ){
-        items(10){
-            SpecialOfferCard()
+        items(listOf(
+            R.drawable.banner1,
+            R.drawable.banner2,
+            R.drawable.banner3,
+        )){
+            Card(
+                modifier = Modifier
+                    .width(320.dp)
+                    .height(120.dp)
+            ){
+                Image(
+                    painter = painterResource(it),
+                    contentDescription = "",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
         }
-    }
-}
-
-@Composable
-fun LockScreenOrientation(orientation: Int) {
-    val context = LocalContext.current
-    DisposableEffect(orientation) {
-        val activity = context.findActivity() ?: return@DisposableEffect onDispose {}
-        val originalOrientation = activity.requestedOrientation
-        activity.requestedOrientation = orientation
-        onDispose {
-            // restore original orientation when view disappears
-            activity.requestedOrientation = originalOrientation
-        }
-    }
-}
-
-fun Context.findActivity(): Activity? = when (this) {
-    is Activity -> this
-    is ContextWrapper -> baseContext.findActivity()
-    else -> null
-}
-
-@Composable
-fun SpecialOfferCard(){
-    Card(
-        modifier = Modifier
-            .width(320.dp)
-            .height(120.dp)
-    ){
-
     }
 }
