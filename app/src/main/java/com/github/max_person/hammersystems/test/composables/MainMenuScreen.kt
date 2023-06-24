@@ -1,8 +1,5 @@
 package com.github.max_person.hammersystems.test.composables
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
 import android.content.pm.ActivityInfo
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,7 +34,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -72,38 +68,7 @@ fun MainMenuScreen (
         modifier = Modifier.fillMaxSize(),
     ) {
         Column {
-            Row(
-                modifier = Modifier.padding(horizontal = horizontalPadding, vertical = 10.dp),
-            ){
-                Button(
-                    onClick = { /* Do something! */ },
-                    contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
-                    colors = ButtonDefaults.outlinedButtonColors(),
-                ) {
-                    Text("Moscow")
-                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                    Icon(
-                        Icons.Default.KeyboardArrowDown,
-                        contentDescription = "City selector dropdown",
-                        modifier = Modifier
-                            .size(ButtonDefaults.IconSize)
-                            .padding(top = 2.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                Button(
-                    onClick = { /* Do something! */ },
-                    contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
-                    colors = ButtonDefaults.outlinedButtonColors(),
-                ) {
-                    Icon(
-                        Icons.Default.QrCode,
-                        contentDescription = "Scan QR code",
-                        modifier = Modifier
-                            .size(ButtonDefaults.IconSize)
-                    )
-                }
-            }
+            TopControls()
 
             val collapseState = rememberCollapsingToolbarScaffoldState()
             Surface {
@@ -274,6 +239,42 @@ fun FoodCard(
         }
     }
 
+}
+
+@Composable
+fun TopControls(){
+    Row(
+        modifier = Modifier.padding(horizontal = horizontalPadding, vertical = 10.dp),
+    ){
+        Button(
+            onClick = { /* Do something! */ },
+            contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+            colors = ButtonDefaults.outlinedButtonColors(),
+        ) {
+            Text("Moscow")
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+            Icon(
+                Icons.Default.KeyboardArrowDown,
+                contentDescription = "City selector dropdown",
+                modifier = Modifier
+                    .size(ButtonDefaults.IconSize)
+                    .padding(top = 2.dp)
+            )
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        Button(
+            onClick = { /* Do something! */ },
+            contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+            colors = ButtonDefaults.outlinedButtonColors(),
+        ) {
+            Icon(
+                Icons.Default.QrCode,
+                contentDescription = "Scan QR code",
+                modifier = Modifier
+                    .size(ButtonDefaults.IconSize)
+            )
+        }
+    }
 }
 
 @Composable
