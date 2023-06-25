@@ -25,10 +25,10 @@ fun NavigationScreens(navController: NavHostController, modifier: Modifier){
             MainMenuScreen()
         }
         composable("profile"){
-            Text("PROFILE SCREEN NOT IMPLEMENTED")
+            WIP(text = "Profile screen not implemented")
         }
         composable("cart"){
-            Text("CART SCREEN NOT IMPLEMENTED")
+            WIP(text = "Cart screen not implemented")
         }
     }
 }

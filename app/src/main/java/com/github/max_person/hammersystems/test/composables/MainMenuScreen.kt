@@ -22,8 +22,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Photo
+import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -91,6 +92,7 @@ fun MainMenuScreen (
 
                         val categories by remember{viewModel.categories.data}
                         val categoriesLoading by remember{viewModel.categories.isLoading}
+                        val categoriesError by remember{viewModel.categories.loadError}
                         LaunchedEffect(Unit){
                             viewModel.categories.load(Unit)
                         }
@@ -101,6 +103,7 @@ fun MainMenuScreen (
 
                         val foods by remember{viewModel.foods.data}
                         var foodsLoading by remember{viewModel.foods.isLoading}
+                        val foodsError by remember{viewModel.foods.loadError}
                         LaunchedEffect(selectedCategory){
                             println("launched for category $selectedCategory")
                             if(selectedCategory != null)
@@ -119,13 +122,24 @@ fun MainMenuScreen (
                             }
                         )
 
+                        val partialFill = remember{0.75f}
                         if(categoriesLoading || foodsLoading) {
                             Box(
-                                modifier = Modifier.fillMaxSize()
+                                modifier = Modifier.fillMaxWidth().fillMaxHeight(partialFill)
                             ){
                                 CircularProgressIndicator(
                                     modifier = Modifier.align(Alignment.Center)
                                 )
+                            }
+                        }
+                        else if(categoriesError.isNotBlank() || foodsError.isNotBlank()){
+                            Row(
+                                modifier = Modifier.fillMaxWidth().fillMaxHeight(partialFill),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ){
+                                Icon(Icons.Default.Close, contentDescription = null)
+                                Text("Something went wrong")
                             }
                         }
                         else{
@@ -209,8 +223,8 @@ fun FoodCard(
                 .data(info.imageUrl)
                 .crossfade(true)
                 .build(),
-            loading = {CircularProgressIndicator()},
-            error = {Icons.Default.Photo},
+            loading = {CircularProgressIndicator(modifier = Modifier.padding(30.dp))},
+            error = {Icon(Icons.Default.PhotoCamera, tint = MaterialTheme.colorScheme.primaryContainer, contentDescription = info.name, modifier = Modifier.padding(20.dp))},
             contentDescription = info.name,
             contentScale = ContentScale.Crop,
             modifier = Modifier
